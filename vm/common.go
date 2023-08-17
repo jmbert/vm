@@ -6,7 +6,7 @@ import (
 
 var Romsize Address
 
-const Ramsize = 0x4000
+const Ramsize = 0xFFFF
 
 type Handler func(s *State, i *Instruction) error
 

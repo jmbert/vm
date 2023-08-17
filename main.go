@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	state, err := init_machine(vm.Ramsize)
+	state, win, ren, err := init_machine(vm.Ramsize)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
@@ -33,5 +33,5 @@ func main() {
 
 	state.LoadRom(rom)
 
-	state.Emulate()
+	state.Emulate(win, ren)
 }

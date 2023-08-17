@@ -3,6 +3,8 @@ package vm
 import (
 	"fmt"
 	"os"
+
+	"github.com/veandco/go-sdl2/sdl"
 )
 
 type State struct {
@@ -33,7 +35,7 @@ func (s *State) GetReg(r Register) Word {
 	return s.registers[r]
 }
 
-func (s *State) Emulate() {
+func (s *State) Emulate(win *sdl.Window, ren *sdl.Renderer) {
 	entry, err := s.r.PeekW(Romsize - 2)
 	if err != nil {
 		fmt.Print(err)
@@ -44,12 +46,17 @@ func (s *State) Emulate() {
 
 	for {
 		instr := DecodeFromByte(s.r, Address(s.GetReg(IP)))
-		fmt.Printf("Executing operation %02X at %04X\n", instr.opcode, s.GetReg(IP))
+		//fmt.Printf("Executing operation %02X at %04X\n", instr.opcode, s.GetReg(IP))
 		ip := s.GetReg(IP)
 		ip += 1
 		ip += Word(len(instr.args) * 2)
 		s.SetReg(ip, IP)
 		err := instr.Execute(s)
+		if err != nil {
+			fmt.Print(err)
+			os.Exit(-1)
+		}
+		err = Display(s, win, ren)
 		if err != nil {
 			fmt.Print(err)
 			os.Exit(-1)
