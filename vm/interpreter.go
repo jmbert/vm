@@ -22,7 +22,7 @@ func DecodeFromByte(m Memory, startAddr Address) Instruction {
 		os.Exit(-1)
 	}
 	var args []Word
-	for index := 0; index < OpMap[Opcode(opcode)].numArgs; index++ {
+	for index := 0; index < OpMap[Opcode(opcode)].NumArgs; index++ {
 		arg, err := m.PeekW(startAddr + 1 + Address(index*2))
 		args = append(args, arg)
 		if err != nil {

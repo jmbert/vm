@@ -29,7 +29,7 @@ const (
 
 type InstructionType struct {
 	handler Handler
-	numArgs int
+	NumArgs int
 }
 
 type Opcode uint8
