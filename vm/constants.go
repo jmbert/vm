@@ -34,7 +34,7 @@ type InstructionType struct {
 
 type Opcode uint8
 
-var opmap = map[Opcode]InstructionType{
+var OpMap = map[Opcode]InstructionType{
 	ADDIM:   {AddImmediateHandler, 1},
 	ADDREG:  {AddRegisterHandler, 1},
 	ADDADDR: {AddAddrHandler, 1},

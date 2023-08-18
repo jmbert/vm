@@ -11,7 +11,7 @@ type Instruction struct {
 }
 
 func (i *Instruction) Execute(s *State) error {
-	return opmap[i.opcode].handler(s, i)
+	return OpMap[i.opcode].handler(s, i)
 }
 
 func DecodeFromByte(m Memory, startAddr Address) Instruction {
@@ -22,7 +22,7 @@ func DecodeFromByte(m Memory, startAddr Address) Instruction {
 		os.Exit(-1)
 	}
 	var args []Word
-	for index := 0; index < opmap[Opcode(opcode)].numArgs; index++ {
+	for index := 0; index < OpMap[Opcode(opcode)].numArgs; index++ {
 		arg, err := m.PeekW(startAddr + 1 + Address(index*2))
 		args = append(args, arg)
 		if err != nil {
